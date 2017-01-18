@@ -1,0 +1,26 @@
+language: ruby
+sudo: false
+
+cache:
+  bundler: true
+
+addons:
+  code_climate:
+    repo_token:
+      secure: DfwrADIFzZWfRSA5Kebg7ij0WNMhC22v5GHBpkTmMgk68iXzQZnUayAwNsoe8cVK3xVpxKK8dTa+pxA2GvSNGV3JBqdTkC+h7WThuoGSqVMqpiJKv1AnA7jH6MfAMNo+p8v/WyICvCTnxuEQ06E8jPEyR7XZWnDNACMGmQgQ+0XZg+BIP4KmgQ2VdOyEqqyF3F/xwmYmQaLL0/AAGGueoQYtRrJOA/5APu7Btu0Blf2QAC/rk9Ae1FjvSXZjMkyAdhHT0KaNHRRVN6rqkXHtF5W9zCToo9TinsPADijhSg0yeMQZkB7FbbTbUyBDRHNbQI1pUjIhuv0Ha43TS5D4CE4MhbNsshPvHiMbXjW4QM2h9LcQ7SN2j5M2Vs8ykr/nuHBjb8Zr/fTcCi6IBC2rJLUBfHdz1OrnX+sWsB19vUO+cTC9djc+SJEKPWKY5T70UjP7AAo55X5PTPMsL6Wc0DjA31ELxRw9lS1Kkkp9Kgs0pVRd4miAszgDknkHBooHqC/sqbHjhc1y2oeaVBoFoX4LvZZTox6tFIWwYITUpLetKPiS+6Rs5vz14zO/IXDrpFN5l/iSd94kWtGB7Fdm/a86fYbkpWIlK0NRRFaXBADNR5FdlTTlWjtluw45U8p4XwisKyeXlhZdI7YQUAdAkR9QENqDehQ5es/Rjx3c6W0=
+
+rvm:
+  - 2.2.6
+  - 2.3.3
+  - 2.4.0
+  - ruby-head
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+
+before_install:
+  - gem update bundler
+
+after_success:
+  - bundle exec codeclimate-test-reporter

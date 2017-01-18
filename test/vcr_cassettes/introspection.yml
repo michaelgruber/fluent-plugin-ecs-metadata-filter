@@ -1,0 +1,113 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:51678/v1/metadata
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Dec 2016 18:48:23 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "Cluster":"westeros",
+          "ContainerInstanceArn":"arn:aws:ecs:us-east-1:123456789012:container-instance/87249abe-a7b0-4610-8cfb-6e18dda5d16a",
+          "Version":"Amazon ECS Agent - v1.13.1 (efe53c6)"
+        }
+    http_version:
+  recorded_at: Tue, 13 Dec 2016 18:48:23 GMT
+- request:
+    method: get
+    uri: http://localhost:51678/v1/tasks
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Dec 2016 18:48:23 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "Tasks":[
+            {
+              "Arn":"arn:aws:ecs:us-east-1:123456789012:task/9f783efe-8cbc-4788-8fd9-4e109c1428c7",
+              "DesiredStatus":"RUNNING",
+              "KnownStatus":"RUNNING",
+              "Family":"targaryen",
+              "Version":"2",
+              "Containers":[
+                {
+                  "DockerId":"86ad8148595a8235d90afcd7b3801520d8ff74551f812752f6f758d2357ab133",
+                  "DockerName":"ecs-targaryen-2-daenerys-e4f1ee88ef81d28c5500",
+                  "Name":"daenerys"
+                },
+                {
+                  "DockerId":"c6d3e1f60b8e3752c9c15513b78d8b48b67dc4b4c888815f9ffcba80739fb51f",
+                  "DockerName":"ecs-targaryen-2-jon-snow-f2b6def883b6e3c19901",
+                  "Name":"jon-snow"
+                }
+              ]
+            },
+            {
+              "Arn":"arn:aws:ecs:us-east-1:123456789012:task/2abf5191-7594-4272-976f-e674ed9fe5b0",
+              "DesiredStatus":"STOPPED",
+              "KnownStatus":"RUNNING",
+              "Family":"bolton",
+              "Version":"1",
+              "Containers":[
+                {
+                  "DockerId":"8387a775a6d43719c9229558659c75770c1ecc38aaa365616f6830d9f7d0cc1e",
+                  "DockerName":"ecs-bolton-1-ramsay-c884b29ea1f1b0ae1100",
+                  "Name":"ramsay"
+                }
+              ]
+            },
+            {
+              "Arn":"arn:aws:ecs:us-east-1:123456789012:task/0f0802ae-bb5b-4b7b-a3df-2c500d909a7f",
+              "DesiredStatus":"RUNNING",
+              "KnownStatus":"STOPPED",
+              "Family":"stark",
+              "Version":"1",
+              "Containers":[
+                {
+                  "DockerId":"814007b2fdcfd6817edc6da30e602dbc103ec87cfc337187122ce198e15af656",
+                  "DockerName":"ecs-stark-1-eddard-8e41a17af9a5e0bd361da8d8",
+                  "Name":"eddard"
+                }
+              ]
+            }
+          ]
+        }
+    http_version:
+  recorded_at: Tue, 13 Dec 2016 18:48:23 GMT
+recorded_with: VCR 3.0.3

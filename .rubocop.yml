@@ -1,0 +1,9 @@
+AllCops:
+  TargetRubyVersion: 2.2
+
+ClassLength:
+  Exclude:
+    - test/**/*.rb
+
+Documentation:
+  Enabled: false
