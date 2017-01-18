@@ -8,9 +8,9 @@ module FluentECS
 
     def_delegators :container_instance, :cluster
 
-    def_delegator  :@container_instance, :arn,     :container_instance_arn
-    def_delegator  :@container_instance, :version, :container_instance_version
-    def_delegator  :@task,               :arn,     :task_arn
+    def_delegator  :container_instance, :arn,     :container_instance_arn
+    def_delegator  :container_instance, :version, :container_instance_version
+    def_delegator  :task,               :arn,     :task_arn
 
     def initialize(attrs = {})
       @docker_id   = attrs['DockerId']

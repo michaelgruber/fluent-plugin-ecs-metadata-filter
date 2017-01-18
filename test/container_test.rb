@@ -12,15 +12,24 @@ class ContainerTest < Minitest::Test
     configure_defaults
   end
 
-  def found_container
-    VCR.use_cassette(:introspection) do
+  def container
+    @container ||= VCR.use_cassette(:introspection) do
       FluentECS::Container.find(docker_id)
     end
   end
 
   def test_accessors
     container = FluentECS::Container.new(container_attributes)
+    assert_equal docker_id, container.docker_id
     assert_equal 'jaime', container.name
+  end
+
+  def test_delegators
+    assert_equal 'RUNNING', container.desired_status
+    assert_equal 'stark', container.family
+    assert_equal 'STOPPED', container.known_status
+    assert_equal '1', container.version
+    assert_equal 'westeros', container.cluster
   end
 
   def test_to_h
@@ -30,7 +39,7 @@ class ContainerTest < Minitest::Test
       'family'  => 'stark',
       'name'    => 'eddard'
     }
-    assert_equal expected, found_container.to_h
+    assert_equal expected, container.to_h
   end
 
   def test_to_h_with_different_fields
@@ -41,7 +50,7 @@ class ContainerTest < Minitest::Test
       'family'       => 'stark',
       'name'         => 'eddard'
     }
-    assert_equal expected, found_container.to_h
+    assert_equal expected, container.to_h
   end
 
   def test_respond_to?
