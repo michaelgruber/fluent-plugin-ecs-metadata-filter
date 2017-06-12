@@ -6,6 +6,7 @@ require 'fluent_ecs'
 
 require 'minitest/autorun'
 require 'fluent/test'
+require 'fluent/test/driver/filter'
 
 require 'webmock/minitest'
 require 'vcr'

@@ -1,8 +1,8 @@
 $LOAD_PATH.unshift File.expand_path('../../../lib', __FILE__)
 
-require 'fluent/filter'
+require 'fluent/plugin/filter'
 
-module Fluent
+module Fluent::Plugin
   class ECSMetadataFilter < Filter
     Fluent::Plugin.register_filter('ecs_metadata', self)
 
@@ -33,7 +33,7 @@ module Fluent
     end
 
     def filter_stream(tag, es)
-      new_es   = MultiEventStream.new
+      new_es   = Fluent::MultiEventStream.new
       metadata = metadata_for_tag(tag)
 
       es.each do |time, record|
