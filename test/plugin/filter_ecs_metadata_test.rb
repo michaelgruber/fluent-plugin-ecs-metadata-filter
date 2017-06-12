@@ -10,15 +10,16 @@ class ECSMetadataFilterTest < Minitest::Test
     @time = Fluent::Engine.now
   end
 
-  def create_driver(conf = '', log = nil)
-    log ||= default_log
-    Test::FilterTestDriver.new(ECSMetadataFilter, log).configure(conf, true)
+  def create_driver(conf = '')
+    Test::Driver::Filter.new(Plugin::ECSMetadataFilter).configure(conf)
   end
 
   def emit(conf = '', msg = {}, driver = nil)
     driver = create_driver(conf)
-    driver.emit(msg, @time)
-    [driver.run.filtered, driver]
+    driver.run(default_tag: default_log) do
+      driver.feed(@time, msg)
+    end
+    [driver.filtered, driver]
   end
 
   def docker_id
@@ -59,7 +60,7 @@ class ECSMetadataFilterTest < Minitest::Test
       } }
 
       es, = emit
-      assert_equal expected, es.instance_variable_get(:@record_array)[0]
+      assert_equal expected, es.map{|e| e.last}.first
     end
   end
 
@@ -71,7 +72,7 @@ class ECSMetadataFilterTest < Minitest::Test
       } }
 
       es, = emit('fields docker_name,family')
-      assert_equal expected, es.instance_variable_get(:@record_array)[0]
+      assert_equal expected, es.map{|e| e.last}.first
     end
   end
 
@@ -87,10 +88,10 @@ class ECSMetadataFilterTest < Minitest::Test
       es, driver = emit
 
       expected_record = {}
-      assert_equal expected_record, es.instance_variable_get(:@record_array)[0]
+      assert_equal expected_record, es.map{|e| e.last}.first
 
       expected_log = 'Exception from WebMock'
-      assert_match expected_log, driver.instance.log.out.logs[0]
+      assert_match expected_log, driver.logs[0]
     end
   ensure
     WebMock.reset! # in case of failed assertion, avoid more failures
@@ -103,8 +104,8 @@ class ECSMetadataFilterTest < Minitest::Test
       expected_record = {}
 
       es, driver = emit
-      assert_equal expected_record, es.instance_variable_get(:@record_array)[0]
-      assert_match expected_log, driver.instance.log.out.logs[0]
+      assert_equal expected_record, es.map{|e| e.last}.first
+      assert_match expected_log, driver.logs[0]
     end
   end
 
@@ -116,7 +117,7 @@ class ECSMetadataFilterTest < Minitest::Test
       } }
 
       es, = emit('fields docker_name,family', 'log' => '{"level":"INFO"}')
-      assert_equal expected, es.instance_variable_get(:@record_array)[0]
+      assert_equal expected, es.map{|e| e.last}.first
     end
   end
 
@@ -129,8 +130,8 @@ class ECSMetadataFilterTest < Minitest::Test
       }
 
       es, driver = emit('fields family', 'log' => '{ tricked = "you" }')
-      assert_equal expected_record, es.instance_variable_get(:@record_array)[0]
-      assert_match expected_log, driver.instance.log.out.logs[0]
+      assert_equal expected_record, es.map{|e| e.last}.first
+      assert_match expected_log, driver.logs[0]
     end
   end
 end
