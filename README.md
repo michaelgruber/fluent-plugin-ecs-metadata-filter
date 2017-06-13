@@ -6,6 +6,13 @@
 
 Filter plugin to add AWS ECS metadata to fluentd events. Based on [fabric8io/fluent-plugin-kubernetes_metadata_filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter).
 
+## Requirements
+
+| fluent-plugin-ecs-metadata-filter | fluentd | ruby |
+|------------------------|---------|------|
+| >= 0.2.0 | >= v0.14.0 | >= 2.1 |
+|  < 0.2.0 | >= v0.12.0 | >= 1.9 |
+
 ## Installation
 
 ```ruby
