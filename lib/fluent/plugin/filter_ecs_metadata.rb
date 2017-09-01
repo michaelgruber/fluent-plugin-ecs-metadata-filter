@@ -40,7 +40,11 @@ module Fluent::Plugin
       es.each do |time, record|
         if metadata
           record = merge_log_json(record) if merge_json_logs?
-          record[@fields_key] = metadata.to_h
+          if @fields_key.empty?
+            record.merge! metadata.to_h
+          else
+            record[@fields_key] = metadata.to_h
+          end
         end
 
         new_es.add(time, record)
