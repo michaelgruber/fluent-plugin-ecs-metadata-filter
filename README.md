@@ -37,7 +37,7 @@ Configuration options for `fluent.conf` are:
   + `name`                       - Name as specified in the task definition
   + `task_arn`
   + `version`
-* `merge_json_log` - Merge in JSON format as top level keys                                                - default: `true`
+* `merge_json_log` - Merge in JSON format as top level keys in the log, if the log is JSON                 - default: `true`
 * `tag_regexp`     - Regular expression used to extract the `docker_id` from the fluentd tag               - default: `var\.lib\.docker\.containers\.(?<docker_id>[a-z0-9]{64})\.[a-z0-9]{64}-json.log$` (note the full 64-character id is needed - a short id will not work)
 
 Reading from the docker container 
