@@ -25,6 +25,7 @@ Configuration options for `fluent.conf` are:
 
 * `cache_size`     - Size of the cache of ECS container metadata which reduces requests to the API server  - default: `1000`
 * `cache_ttl`      - TTL in seconds for each cached element. Set to negative value to disable TTL eviction - default: `3600` (1 hour)
+* `fields_key`     - Key in the final record holding the metadata fields.  Set to "" to set fields in the record itself - default: `ecs`
 * `keys`           - Array of metadata keys that should be added to a log record                           - default: `docker_name`, `family`, `cluster`, `name` - **Available options:**
   + `cluster`
   + `container_instance_arn`
