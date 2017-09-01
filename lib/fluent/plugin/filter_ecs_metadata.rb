@@ -9,6 +9,7 @@ module Fluent::Plugin
     config_param :cache_size,     :integer, default: 1000
     config_param :cache_ttl,      :integer, default: 60 * 60
     config_param :merge_json_log, :bool,    default: true
+    config_param :fields_key,     :string,  default: 'ecs'
     config_param :fields,         :array,
                  default:          %w(docker_name family cluster name),
                  value_type:      :string
@@ -39,7 +40,7 @@ module Fluent::Plugin
       es.each do |time, record|
         if metadata
           record = merge_log_json(record) if merge_json_logs?
-          record['ecs'] = metadata.to_h
+          record[@fields_key] = metadata.to_h
         end
 
         new_es.add(time, record)

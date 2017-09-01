@@ -134,4 +134,18 @@ class ECSMetadataFilterTest < Minitest::Test
       assert_match expected_log, driver.logs[0]
     end
   end
+
+  def test_with_field_key
+    VCR.use_cassette('introspection') do
+      expected = { 'metadata' => {
+        'docker_name' => 'ecs-targaryen-2-daenerys-e4f1ee88ef81d28c5500',
+        'family'      => 'targaryen',
+        'cluster'     => 'westeros',
+        'name'        => 'daenerys'
+      } }
+
+      es, = emit('fields_key metadata')
+      assert_equal expected, es.map{|e| e.last}.first
+    end
+  end
 end
