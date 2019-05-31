@@ -8,6 +8,7 @@ module Fluent::Plugin
 
     config_param :cache_size,     :integer, default: 1000
     config_param :cache_ttl,      :integer, default: 60 * 60
+    config_param :ecs_agent_uri,  :string,  default: 'http://localhost:51678/v1'
     config_param :merge_json_log, :bool,    default: true
     config_param :fields_key,     :string,  default: 'ecs'
     config_param :fields,         :array,
@@ -29,6 +30,9 @@ module Fluent::Plugin
         c.cache_ttl  = @cache_ttl < 0 ? :none : @cache_ttl
         c.fields     = @fields
       end
+
+      FluentECS::Metadata.base_uri @ecs_agent_uri
+      FluentECS::Task.base_uri @ecs_agent_uri
 
       @tag_regexp_compiled = Regexp.compile(@tag_regexp)
     end
